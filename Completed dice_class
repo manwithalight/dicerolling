@@ -1,0 +1,109 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Jul  1 05:05:40 2019
+
+@author: joshclipsham
+"""
+import random
+from collections import Counter
+
+
+
+class dice_roll(object):
+
+    def __init__(self, dice, sides):
+        self.sides = sides
+        self.dice = dice
+        self.the_list = []
+        self.sorted_list = []
+        
+        
+#performs the dice rolling, adds result to total ammount and adds to the_list         
+    def the_roll(self):
+        rolls = 1
+        total_ammount = 0
+        self.rolls = rolls
+        self.total_ammount = total_ammount
+        del self.the_list[:] 
+        while self.rolls <= self.dice:
+            result = random.randint(1, self.sides)
+            self.result = result
+            self.total_ammount = self.total_ammount + self.result
+            self.the_list.append(self.result)
+            print (self.result)
+            self.rolls += 1
+        print ("You have completed: ", self.dice," rolls")
+        return self.result   
+#prints the total ammount string    
+    def total_calc(self):
+        print("The total ammount you rolled is: ", self.total_ammount)
+        return self.total_ammount
+
+
+
+
+#returns the ammount of individual numbers you have rolled    
+    def individual(self):
+        self.the_list.sort()
+
+        a = Counter(self.the_list)
+        for x, y in a.items():
+            print('You rolled', x, ':', y, 'times') 
+
+
+
+    
+#acquires input for ammount of dice and dice sides from the user, checks it to make sure its correct.        
+
+
+run_time = 0
+while run_time != 1:    
+    verdict = 'incorrect'
+    interger_check_one = 0
+    interger_check_two = 0
+    while interger_check_one == 0 :
+        dice_number = input("How Many Dice do you want to roll?")
+        test_one = dice_number.isdigit()
+        if test_one == True:
+            dice_number = int(dice_number)
+            if dice_number != 0:
+                if dice_number <= 1000000:
+                    interger_check_one = 1
+            elif dice_number == 0:
+                print("don't be a zero")
+        else:
+            print('Please enter a digit only')
+    while interger_check_two == 0:
+        number_of_sides = input("How many Sides do these dice have?")
+        test_two = number_of_sides.isdigit()
+        if test_two == True:
+            number_of_sides = int(number_of_sides)
+            if number_of_sides != 0:
+                if number_of_sides <= 1000000:
+                    interger_check_two = 1
+            elif number_of_sides == 0:
+                print("don't be zero")
+        else:
+            print('Please enter a digit only')
+    
+
+
+    a = dice_roll(dice_number, number_of_sides)
+
+    a.the_roll()
+    a.total_calc()
+    a.individual() 
+
+    while verdict == 'incorrect':
+        answer = input("Do you want to continue? Yes or No: ")
+        answer = answer.lower()
+        if (answer == 'no'):
+            run_time = 1
+            verdict = 'correct'
+        elif (answer == 'yes'):
+            run_time = 0
+            verdict = 'correct'
+        else:
+            print('Please answer Yes or No only')
+            verdict = 'incorrect'        
